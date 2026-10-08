@@ -1,0 +1,224 @@
+import java.util.Scanner;
+
+public class SinglyLinkedList {
+
+    // Node class
+    static class Node {
+        int rollNo;
+        String name;
+        int age;
+        Node next;
+
+        Node(int rollNo, String name, int age) {
+            this.rollNo = rollNo;
+            this.name = name;
+            this.age = age;
+            this.next = null;
+        }
+    }
+
+    static Node head = null;
+
+    // Insert student
+    static void insertStudent(int rollNo, String name, int age) {
+
+        Node newNode = new Node(rollNo, name, age);
+
+        if (head == null) {
+            head = newNode;
+        } else {
+            Node temp = head;
+
+            while (temp.next != null) {
+                temp = temp.next;
+            }
+
+            temp.next = newNode;
+        }
+
+        System.out.println("Student registered successfully.");
+    }
+
+    // Delete student
+    static void deleteStudent(int rollNo) {
+
+        if (head == null) {
+            System.out.println("Student list is empty.");
+            return;
+        }
+
+        // Delete first student
+        if (head.rollNo == rollNo) {
+            head = head.next;
+            System.out.println("Student deleted successfully.");
+            return;
+        }
+
+        Node temp = head;
+
+        while (temp.next != null && temp.next.rollNo != rollNo) {
+            temp = temp.next;
+        }
+
+        if (temp.next == null) {
+            System.out.println("Student not found.");
+        } else {
+            temp.next = temp.next.next;
+            System.out.println("Student deleted successfully.");
+        }
+    }
+
+    // Search student
+    static void searchStudent(int rollNo) {
+
+        Node temp = head;
+
+        while (temp != null) {
+
+            if (temp.rollNo == rollNo) {
+                System.out.println("\nStudent found!");
+                System.out.println("Roll No: " + temp.rollNo);
+                System.out.println("Name: " + temp.name);
+                System.out.println("Age: " + temp.age);
+                return;
+            }
+
+            temp = temp.next;
+        }
+
+        System.out.println("Student not found.");
+    }
+
+    // Update student
+    static void updateStudent(int rollNo, String name, int age) {
+
+        Node temp = head;
+
+        while (temp != null) {
+
+            if (temp.rollNo == rollNo) {
+                temp.name = name;
+                temp.age = age;
+
+                System.out.println("Student details updated successfully.");
+                return;
+            }
+
+            temp = temp.next;
+        }
+
+        System.out.println("Student not found.");
+    }
+
+    // Display all students
+    static void displayStudents() {
+
+        if (head == null) {
+            System.out.println("No student records available.");
+            return;
+        }
+
+        Node temp = head;
+
+        System.out.println("\n===== STUDENT REGISTRATION LIST =====");
+
+        while (temp != null) {
+
+            System.out.println("Roll No: " + temp.rollNo);
+            System.out.println("Name: " + temp.name);
+            System.out.println("Age: " + temp.age);
+            System.out.println("-------------------------------------");
+
+            temp = temp.next;
+        }
+    }
+
+    // Main method
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int choice;
+
+        do {
+
+            System.out.println("\n===== STUDENT REGISTRATION SYSTEM =====");
+            System.out.println("1. Insert Student");
+            System.out.println("2. Delete Student");
+            System.out.println("3. Search Student");
+            System.out.println("4. Update Student");
+            System.out.println("5. Display Students");
+            System.out.println("6. Exit");
+
+            System.out.print("Enter your choice: ");
+            choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice) {
+
+                case 1:
+
+                    System.out.print("Enter Roll No: ");
+                    int rollNo = sc.nextInt();
+                    sc.nextLine();
+
+                    System.out.print("Enter Student Name: ");
+                    String name = sc.nextLine();
+
+                    System.out.print("Enter Age: ");
+                    int age = sc.nextInt();
+
+                    insertStudent(rollNo, name, age);
+                    break;
+
+                case 2:
+
+                    System.out.print("Enter Roll No to delete: ");
+                    int deleteRoll = sc.nextInt();
+
+                    deleteStudent(deleteRoll);
+                    break;
+
+                case 3:
+
+                    System.out.print("Enter Roll No to search: ");
+                    int searchRoll = sc.nextInt();
+
+                    searchStudent(searchRoll);
+                    break;
+
+                case 4:
+
+                    System.out.print("Enter Roll No to update: ");
+                    int updateRoll = sc.nextInt();
+                    sc.nextLine();
+
+                    System.out.print("Enter new Name: ");
+                    String newName = sc.nextLine();
+
+                    System.out.print("Enter new Age: ");
+                    int newAge = sc.nextInt();
+
+                    updateStudent(updateRoll, newName, newAge);
+                    break;
+
+                case 5:
+
+                    displayStudents();
+                    break;
+
+                case 6:
+
+                    System.out.println("Program terminated.");
+                    break;
+
+                default:
+
+                    System.out.println("Invalid choice!");
+            }
+
+        } while (choice != 6);
+
+        sc.close();
+    }
+}
